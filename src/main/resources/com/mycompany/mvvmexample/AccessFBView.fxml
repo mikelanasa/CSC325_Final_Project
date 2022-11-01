@@ -15,7 +15,7 @@
             <TextField fx:id="majorField" promptText="Major" />
             <TextField fx:id="ageField" promptText="Age" />
             <Button fx:id="writeButton" mnemonicParsing="false" onAction="#addRecord" text="Write" textAlignment="CENTER" />
-            <Button fx:id="readButton" mnemonicParsing="false" onAction="#writeRecord" text="Read" textAlignment="CENTER" />
+            <Button fx:id="readButton" mnemonicParsing="false" onAction="#readRecord" text="Read" textAlignment="CENTER" />
          </children>
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
