@@ -10,12 +10,12 @@ package models;
  */
 public class Person {
     private String name;
-    private String Major;
+    private String major;
     private int age;
 
-    public Person(String name, String Major, int age) {
+    public Person(String name, String major, int age) {
         this.name = name;
-        this.Major = Major;
+        this.major = major;
         this.age = age;
     }
 
@@ -28,11 +28,11 @@ public class Person {
     }
 
     public String getMajor() {
-        return Major;
+        return major;
     }
 
-    public void setMajor(String Major) {
-        this.Major = Major;
+    public void setMajor(String major) {
+        this.major = major;
     }
 
     public int getAge() {
