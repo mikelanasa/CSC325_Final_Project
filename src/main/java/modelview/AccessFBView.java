@@ -64,7 +64,7 @@ public class AccessFBView {
     }
 
         @FXML
-    private void writeRecord(ActionEvent event) {
+    private void readRecord(ActionEvent event) {
         readFirebase();
     }
     
