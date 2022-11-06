@@ -20,12 +20,30 @@
             <artifactId>javafx-fxml</artifactId>
             <version>13</version>
         </dependency>
+                <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-web</artifactId>
+            <version>13</version>
+        </dependency>
+<!--     <dependency>
+    <groupId>com.google.firebase</groupId>
+    <artifactId>firebase-auth</artifactId>
+    <version>21.0.1</version>
+</dependency>-->
+
         <dependency>
             <groupId>com.google.firebase</groupId>
             <artifactId>firebase-admin</artifactId>
             <version>9.1.0</version>
             <type>jar</type>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.google.firebase/firebase-config -->
+<!--        <dependency>
+            <groupId>com.google.firebase</groupId>
+            <artifactId>firebase-config</artifactId>
+            <version>21.0.0</version>
+        </dependency>-->
+
 
         <dependency>
             <groupId>org.rationalityfrontline.workaround</groupId>
