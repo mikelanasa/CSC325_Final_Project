@@ -8,10 +8,14 @@ import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
 import com.google.cloud.firestore.WriteResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.UserRecord;
 import com.mycompany.mvvmexample.FirestoreContext;
 import com.mycompany.mvvmexample.FirestoreContext;
 import com.mycompany.mvvmexample.FirestoreContext;
 import com.mycompany.mvvmexample.FirestoreContext;
+import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +23,8 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -66,6 +72,16 @@ public class AccessFBView {
         @FXML
     private void readRecord(ActionEvent event) {
         readFirebase();
+    }
+    
+            @FXML
+    private void regRecord(ActionEvent event) {
+        registerUser();
+    }
+    
+     @FXML
+    private void switchToSecondary() throws IOException {
+        App.setRoot("WebContainer.fxml");
     }
     
     public void addData() {
@@ -118,5 +134,36 @@ public class AccessFBView {
              ex.printStackTrace();
         }
         return key;
+    }
+        
+        public void sendVerificationEmail() {
+        try {
+            UserRecord user = App.fauth.getUser("name");
+            //String url = user.getPassword();
+
+        } catch (Exception e) {
+        }
+    }
+
+    public boolean registerUser() {
+        UserRecord.CreateRequest request = new UserRecord.CreateRequest()
+                .setEmail("user@example.com")
+                .setEmailVerified(false)
+                .setPassword("secretPassword")
+                .setPhoneNumber("+11234567890")
+                .setDisplayName("John Doe")
+                .setDisabled(false);
+
+        UserRecord userRecord;
+        try {
+            userRecord = App.fauth.createUser(request);
+            System.out.println("Successfully created new user: " + userRecord.getUid());
+            return true;
+
+        } catch (FirebaseAuthException ex) {
+           // Logger.getLogger(FirestoreContext.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        
     }
 }

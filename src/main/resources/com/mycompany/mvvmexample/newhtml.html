@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test #1</title>
+    <meta charset="UTF-8">
+	<script>
+        "use strict";
+
+        /* COMMENTED OUT BECAUSE WE ARE PROVIDING OUR IMPLEMENTATION THROUGH THE JAVA APP. */
+        //window.enigma = {
+        //    checkSolution: function (strIn) {
+        //        if (strIn.toLowerCase() == 'god') {
+        //            document.getElementById('out').classList.add('enabled');
+        //            return true;
+        //        }
+        //        return false;
+        //    }
+        //}
+
+        window.onload = function () {
+            // Check if 'window.enigma' facilities are available, this test WON'T PASS in a regular browser.
+            if (!window.enigma || !window.enigma.checkSolution) showAPIError();
+
+            var form = document.querySelector("form");
+
+            form.onsubmit = function (evt) {
+                evt.preventDefault();
+
+                // This will check for a solution and, if valid, update the #out class from Java.
+                window.enigma.checkSolution(form.firstChild.value);
+            }
+        }
+
+        function showAPIError() {
+            var node = document.createElement("div");
+            node.style.backgroundColor = 'rgba(255, 0, 0, .7)';
+            node.style.textAlign = 'left';
+            node.style.padding = '5px 10px';
+            node.innerHTML = '<b>API not found</b>, please open this page from the provided JavaFX app.';
+            document.body.insertBefore(node, document.body.firstChild);
+        }
+    </script>
+    <style>
+
+        html { height: 100%; }
+
+        body {
+            height: 100%;
+            margin: 0;
+            background: linear-gradient(to bottom, #fff 0%, #ddd 100%);
+        }
+
+        body > *, input { text-align: center; }
+
+        h1 {
+            margin: 0;
+            padding: 50px 0 20px 0;
+            font-family: 'Segoe UI Light';
+            color: rgba(0, 0, 0, .6);
+        }
+
+        input {
+            border: none;
+            outline: none;
+            font-size: 1.1em 'Segoe UI';
+            padding: 10px 20px;
+            transition: .3s background-color;
+            background-color: rgba(0, 0, 0, .04);
+        }
+        input:focus { background-color: rgba(0, 0, 0, .07); }
+
+        ::-webkit-input-placeholder { letter-spacing: 5px; font-style: italic; }
+        ::-moz-placeholder { letter-spacing: 5px; font-style: italic; }
+        ::-ms-input-placeholder { letter-spacing: 5px; font-style: italic; }
+
+        #out {
+            margin-top: 20px;
+            font: bold 1.1em 'Segoe Script';
+            color: cornflowerblue;
+            transition: 1s opacity;
+            opacity: 0;
+        }
+        #out.enabled { opacity: 1; }
+
+    </style>
+</head>
+<body>
+    <h1>The solution is God.</h1>
+    <form><input type="text" placeholder="solution" autofocus></form>
+    <div id="out">BRAVO!</div>
+</body>
+</html>
