@@ -24,6 +24,7 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.concurrent.Worker.State;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import netscape.javascript.JSObject;
 import org.w3c.dom.Document;
 
@@ -48,7 +49,7 @@ public class WebContainerController implements Initializable {
                     + "  </script> "//
                     + "</head> "//
                     + "<body> "//
-                    + "   <h2>This is Html content</h2> <input id='ueberschr' value='yellow' />"//
+                    + "   <h2>This is Html content</h2> <input id='ueberschr' value='lightblue' />"//
                     + "   <button onclick='app12.showTime();changeBgColor();'>Call To JavaFX</button> "//
                     + "</body> "//
                     + "</html> "//
@@ -75,7 +76,8 @@ public class WebContainerController implements Initializable {
     @FXML
     Label label;
     
-    
+    @FXML
+    private MenuItem menuItem_user;
     
     @FXML
     WebView webView;
@@ -89,7 +91,7 @@ public class WebContainerController implements Initializable {
     private void setLabel(ActionEvent e){
                             System.out.println("H1");
 
-        doc.getElementById("ueberschr").setAttribute("value", "Red");
+        doc.getElementById("ueberschr").setAttribute("value", "white");
     }
     
     @FXML
@@ -103,13 +105,14 @@ public class WebContainerController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        menuItem_user.setText(SigninController.currentUser.getDisplayName());
 
         try {
-            webEngine = webView.getEngine();
-                      //  webView.setContextMenuEnabled(false);
+            webEngine = webView.getEngine(); //  webView.setContextMenuEnabled(false);
             webEngine.loadContent(HTML_STRING2);
-
             webEngine.getLoadWorker().stateProperty().addListener(new ChangeListener<Worker.State>() {
+                
                 @Override
                 public void changed(ObservableValue<? extends State> ov, State t, State newState) {
                      if (newState == Worker.State.SUCCEEDED) {
@@ -147,4 +150,5 @@ public class WebContainerController implements Initializable {
         }
     }
 }
+
 
