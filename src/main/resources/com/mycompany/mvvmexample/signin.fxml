@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: lightblue; -fx-border-radius: 10 10 0 0;; -fx-background-radius: 10 10 0 0;;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="modelview.SigninController">
+   <center>
+      <VBox alignment="CENTER" maxWidth="-Infinity" prefWidth="250.0" spacing="20.0" style="-fx-border-radius: 10 10 0 0; -fx-background-radius: 10 10 0 0;" BorderPane.alignment="CENTER">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="User Sign In">
+               <font>
+                  <Font name="Stencil" size="36.0" />
+               </font>
+            </Text>
+            <TextField fx:id="textField_user" promptText="Enter UserID" />
+            <PasswordField fx:id="textField_pass" promptText="Enter Password" />
+            <HBox alignment="CENTER" spacing="20.0">
+               <children>
+                  <Button fx:id="button_signIn" mnemonicParsing="false" onAction="#handleButton_signIn" text="Sign In" />
+                  <Button fx:id="button_signUp" mnemonicParsing="false" onAction="#handleButton_signUp" text="Sign Up" />
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+      </VBox>
+   </center>
+</BorderPane>
