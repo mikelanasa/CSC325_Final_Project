@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="467.0" prefWidth="496.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="modelview.AccessFBView">
+<AnchorPane prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: lightblue; -fx-border-radius: 10 10 0 0;; -fx-background-radius: 10 10 0 0;;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="modelview.AccessFBView">
    <children>
       <VBox alignment="CENTER_RIGHT" layoutX="7.0" prefHeight="166.0" prefWidth="485.0" spacing="10.0">
          <children>
@@ -22,12 +22,12 @@
                         <Insets left="20.0" right="20.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="writeButton" mnemonicParsing="false" onAction="#addRecord" text="Write" textAlignment="CENTER">
+                  <Button fx:id="writeButton" disable="true" mnemonicParsing="false" onAction="#addRecord" text="Write" textAlignment="CENTER">
                      <HBox.margin>
                         <Insets left="20.0" right="20.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="regButton" mnemonicParsing="false" onAction="#regRecord" text="Register" textAlignment="CENTER">
+                  <Button fx:id="regButton" disable="true" mnemonicParsing="false" onAction="#regRecord" text="Register" textAlignment="CENTER">
                      <HBox.margin>
                         <Insets left="20.0" right="20.0" />
                      </HBox.margin>
@@ -40,7 +40,7 @@
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
       </VBox>
-      <TextArea fx:id="outputField" layoutX="6.0" layoutY="157.0" prefHeight="304.0" prefWidth="485.0" />
+      <TextArea fx:id="outputField" layoutX="6.0" layoutY="157.0" prefHeight="300.0" prefWidth="486.0" />
    </children>
    <opaqueInsets>
       <Insets />
