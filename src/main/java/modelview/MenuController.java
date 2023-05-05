@@ -59,7 +59,7 @@ public class MenuController {
         List<MenuItem> menuItems = new ArrayList<MenuItem>();
         
         
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 9; i++) {
                 
                 menuItems.add(getMenuItems().get(i));
                 //Image image = new Image(getClass().getResourceAsStream("/com/mycompany/mvvmexample/bakerylogo.png"));
@@ -85,8 +85,6 @@ public class MenuController {
     
     private List<MenuItem> getMenuItems() {
         
-        //List<MenuItem> menuItems = new ArrayList<MenuItem>();
-        
         try {
             Firestore db = FirestoreClient.getFirestore();
             // Create a reference to the cities collection
@@ -110,6 +108,6 @@ public class MenuController {
         }
         
         return menuItems;
-    }
+    } // ends getMenuItems
 
 }

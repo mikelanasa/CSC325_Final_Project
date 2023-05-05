@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: White;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="modelview.MenuController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="700.0" minWidth="700.0" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: White;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="modelview.MenuController">
    <center>
       <TabPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: WHITE;" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
@@ -17,7 +17,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: WHITE;">
                      <children>
-                        <GridPane fx:id="MenuGrid" alignment="TOP_CENTER" gridLinesVisible="true" layoutX="1.0" layoutY="1.0" prefHeight="371.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <GridPane fx:id="MenuGrid" alignment="TOP_CENTER" gridLinesVisible="true" layoutX="1.0" layoutY="1.0" prefHeight="671.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
