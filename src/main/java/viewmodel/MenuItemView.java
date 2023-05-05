@@ -44,6 +44,8 @@ public class MenuItemView extends VBox {
 
         ingredientsLabel = new Label(String.join(", ", menuItem.getIngredients()));
         ingredientsLabel.setFont(Font.font("Verdana", FontWeight.NORMAL, 12));
+        ingredientsLabel.setMaxWidth(200);
+        ingredientsLabel.setWrapText(true);
         setAlignment(Pos.CENTER);
         setFillWidth(true);
         //setSpacing(5);
