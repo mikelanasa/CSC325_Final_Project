@@ -44,6 +44,11 @@ public class CustomerMenuController {
     private void switchToSecondary() throws IOException {
         App.setRoot("logInPage.fxml");
     }
+    
+    @FXML
+    private void switchToMenu() throws IOException {
+        App.setRoot("menuPage.fxml");
+    }
 
     @FXML
     void cancelOrder(MouseEvent event) {

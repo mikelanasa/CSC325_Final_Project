@@ -25,7 +25,7 @@
          </padding>
       </Label>
       <Separator opacity="0.0" prefHeight="23.0" prefWidth="461.0" />
-      <Button fx:id="bakeryBttn" mnemonicParsing="false" onMousePressed="#viewBakery" prefHeight="61.0" prefWidth="221.0" style="-fx-background-color: #C02E28;" text="Bakery" textFill="WHITE" />
+      <Button fx:id="bakeryBttn" mnemonicParsing="false" onAction="#switchToMenu" onMousePressed="#viewBakery" prefHeight="61.0" prefWidth="221.0" style="-fx-background-color: #C02E28;" text="Bakery" textFill="WHITE" />
       <Button fx:id="orderStatusBttn" mnemonicParsing="false" onMousePressed="#orderStatus" prefHeight="60.0" prefWidth="221.0" style="-fx-background-color: #C02E28;" text="Order Status" textFill="WHITE" />
       <Button fx:id="cancelOrderBttn" mnemonicParsing="false" onMousePressed="#cancelOrder" prefHeight="61.0" prefWidth="221.0" style="-fx-background-color: #C02E28;" text="Cancel Order" textFill="WHITE" />
       <Button fx:id="orderHistoryBttn" mnemonicParsing="false" onMousePressed="#viewHistory" prefHeight="61.0" prefWidth="221.0" style="-fx-background-color: #C02E28;" text="Order History" textFill="WHITE" />
