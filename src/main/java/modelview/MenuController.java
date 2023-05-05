@@ -56,18 +56,15 @@ public class MenuController {
 
     @FXML
     void initialize() throws FileNotFoundException {
-        List<MenuItem> menuItems = new ArrayList<MenuItem>();
         
-        
-            for (int i = 0; i < 9; i++) {
+        Thread dbThread = new Thread(() -> {
+            List<MenuItem> retrievedMenuItems = getMenuItems();
+            Platform.runLater(() -> {
                 
-                menuItems.add(getMenuItems().get(i));
-                //Image image = new Image(getClass().getResourceAsStream("/com/mycompany/mvvmexample/bakerylogo.png"));
-                //MenuItem NewItem = new MenuItem(name, price, description, image);
-                //menuItems.add(NewItem);  
-            }
-            MenuDisplay(menuItems);
-            
+                MenuDisplay(retrievedMenuItems);
+            });
+        });
+        dbThread.start();
     }
 
     private void MenuDisplay(List<MenuItem> menuItems) {
@@ -75,10 +72,8 @@ public class MenuController {
         for (int i = 0; i < menuItems.size(); i++) {
             MenuItem menuItem = menuItems.get(i);
             MenuItemView menuItemView = new MenuItemView(menuItem);
-            MenuGrid.add(menuItemView, i % 3, i / 3);
-            //System.out.println(1%3);
-            //System.out.println(1/3);
-            //AddtoOrder = new Button("Add to Order");
+            MenuGrid.add(menuItemView, i % 4, i / 4);
+            
 
         }
     }
