@@ -5,11 +5,7 @@
 package modelview;
 
 import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.CollectionReference;
-import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.Query;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
 import com.google.firebase.cloud.FirestoreClient;
@@ -17,11 +13,9 @@ import com.mycompany.mvvmexample.App;
 import models.MenuItem;
 import viewmodel.MenuItemView;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import static java.lang.Double.parseDouble;
-import static java.lang.String.valueOf;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
