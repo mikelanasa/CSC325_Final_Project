@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" prefHeight="436.0" prefWidth="461.0" spacing="5.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="modelview.CustomerMenuController">
+   <children>
+      <Group />
+      <Group />
+      <ButtonBar opacity="0.0" prefHeight="16.0" prefWidth="461.0" />
+      <Separator opacity="0.0" prefHeight="45.0" prefWidth="461.0" />
+      <Label alignment="CENTER" prefHeight="8.0" prefWidth="215.0" text="Customer Menu" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="28.0" />
+         </font>
+         <padding>
+            <Insets bottom="20.0" />
+         </padding>
+      </Label>
+      <Separator opacity="0.0" prefHeight="23.0" prefWidth="461.0" />
+      <Button fx:id="bakeryBttn" mnemonicParsing="false" onMousePressed="#viewBakery" prefHeight="61.0" prefWidth="221.0" style="-fx-background-color: #C02E28;" text="Bakery" textFill="WHITE" />
+      <Button fx:id="orderStatusBttn" mnemonicParsing="false" onMousePressed="#orderStatus" prefHeight="60.0" prefWidth="221.0" style="-fx-background-color: #C02E28;" text="Order Status" textFill="WHITE" />
+      <Button fx:id="cancelOrderBttn" mnemonicParsing="false" onMousePressed="#cancelOrder" prefHeight="61.0" prefWidth="221.0" style="-fx-background-color: #C02E28;" text="Cancel Order" textFill="WHITE" />
+      <Button fx:id="orderHistoryBttn" mnemonicParsing="false" onMousePressed="#viewHistory" prefHeight="61.0" prefWidth="221.0" style="-fx-background-color: #C02E28;" text="Order History" textFill="WHITE" />
+      <Separator opacity="0.0" prefHeight="44.0" prefWidth="461.0" />
+      <ButtonBar prefHeight="56.0" prefWidth="461.0">
+         <buttons>
+            <Button fx:id="logOutBttn" mnemonicParsing="false" onAction="#switchToSecondary" onMousePressed="#logOut" prefHeight="32.0" prefWidth="109.0" snapToPixel="false" style="-fx-background-color: #C02E28;" text="LOGOUT" textAlignment="CENTER" textFill="WHITE">
+               <padding>
+                  <Insets left="20.0" right="20.0" />
+               </padding>
+            </Button>
+            <Separator minWidth="0.0" opacity="0.0" orientation="VERTICAL" prefHeight="50.0" />
+            <Separator opacity="0.0" prefHeight="0.0" prefWidth="277.0" />
+         </buttons>
+      </ButtonBar>
+      <Separator opacity="0.0" prefHeight="0.0" prefWidth="461.0" />
+      <Separator opacity="0.0" prefWidth="200.0" />
+   </children>
+   <effect>
+      <DropShadow />
+   </effect>
+</VBox>

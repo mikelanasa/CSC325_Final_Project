@@ -4,16 +4,30 @@
  */
 package modelview;
 
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.CollectionReference;
+import com.google.cloud.firestore.DocumentSnapshot;
+import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.Query;
+import com.google.cloud.firestore.QueryDocumentSnapshot;
+import com.google.cloud.firestore.QuerySnapshot;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
+import com.google.firebase.cloud.FirestoreClient;
 import com.mycompany.mvvmexample.App;
 import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javax.swing.JOptionPane;
+import models.Person;
 
 /**
  *
@@ -22,35 +36,61 @@ import javafx.scene.control.TextField;
 public class SigninController {
     
     @FXML
-    private Button button_signIn, button_signUp;
+    private Button loginButton, button_signUp;
 
     @FXML
-    private TextField textField_user;
+    private TextField emailTextField;
     
     @FXML
-    private PasswordField textField_pass;
+    private PasswordField passwordTextField;
     
     static UserRecord currentUser;
+    
+    private String role;
+    
+    private boolean isEmployee = false;
 
     @FXML
     void handleButton_signIn(ActionEvent event) throws IOException {
         try {
             // get username input
-            String user = textField_user.getText();
+            String email = emailTextField.getText();
             // get password input
-            String pass = textField_pass.getText();
+            String pass = passwordTextField.getText();
             // compare input to firebase authentication
-            currentUser = FirebaseAuth.getInstance().getUser(user);
-            App.setRoot("AccessFBView.fxml");
+            currentUser = FirebaseAuth.getInstance().getUserByEmail(email);
+            if(checkRole(currentUser))
+                App.setRoot("EmployeeMenu.fxml");
+            else
+                App.setRoot("CustomerMenu.fxml");
             
         } catch (FirebaseAuthException | IllegalArgumentException ex) {
-            System.err.println("Error signing in. Check UserID and password and try again");
+            JOptionPane.showMessageDialog(null, "Error signing in.\nCheck email and password and try again");
         }
     } // ends sign in button handler
 
     @FXML
     void handleButton_signUp(ActionEvent event) throws IOException {
-        App.setRoot("signup.fxml");
+        App.setRoot("signUpPage.fxml");
+    }
+    
+    public boolean checkRole(UserRecord u) {
+             
+        String userEmail = u.getEmail();
+        Firestore db = FirestoreClient.getFirestore();
+        Query query = db.collection("User")
+                .whereEqualTo("email", userEmail).limit(1);
+        ApiFuture<QuerySnapshot> querySnapshot = query.get();
+        try {
+            for (DocumentSnapshot document : querySnapshot.get().getDocuments()) {
+                role = document.get("role").toString();
+                if(role.equals("employee"))
+                    isEmployee = true;
+            }
+        } catch (InterruptedException | ExecutionException ex) {
+            Logger.getLogger(SigninController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return isEmployee;
     }
     
 }
