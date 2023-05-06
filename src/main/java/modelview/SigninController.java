@@ -21,7 +21,9 @@ import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javax.swing.JOptionPane;
@@ -48,7 +50,7 @@ public class SigninController {
     private boolean isEmployee = false;
 
     @FXML
-    void handleButton_signIn(ActionEvent event){
+    void handleButton_signIn(ActionEvent event) {
         Thread signInThread = new Thread(() -> {
             try {
                 // get username input
@@ -57,6 +59,7 @@ public class SigninController {
                 String pass = passwordTextField.getText();
                 // compare input to firebase authentication
                 currentUser = FirebaseAuth.getInstance().getUserByEmail(email);
+                
 
                 Platform.runLater(() -> {
                     if (checkRole(currentUser)) {
@@ -75,7 +78,7 @@ public class SigninController {
                 });
             } catch (FirebaseAuthException | IllegalArgumentException ex) {
                 Platform.runLater(() -> {
-                    JOptionPane.showMessageDialog(null, "Error signing in.\nCheck email and password and try again");
+                    showAlert("Error signing in.\nCheck email and password and try again");
                 });
             }
         });
@@ -106,6 +109,13 @@ public class SigninController {
             Logger.getLogger(SigninController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return isEmployee;
+    }
+
+    private void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR, message, ButtonType.OK);
+        alert.setTitle("Sign In Error");
+        alert.setHeaderText(null);
+        alert.showAndWait();
     }
 
 }
