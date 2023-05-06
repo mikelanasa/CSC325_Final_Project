@@ -46,6 +46,7 @@ public class SigninController {
     static UserRecord currentUser;
 
     private String role;
+    private String password;
 
     private boolean isEmployee = false;
 
@@ -59,23 +60,29 @@ public class SigninController {
                 String pass = passwordTextField.getText();
                 // compare input to firebase authentication
                 currentUser = FirebaseAuth.getInstance().getUserByEmail(email);
-                
-
-                Platform.runLater(() -> {
-                    if (checkRole(currentUser)) {
-                        try {
-                            App.setRoot("EmployeeMenu.fxml");
-                        } catch (IOException ex) {
+                String userPass = getPassword(currentUser);
+                if(pass.equals(userPass)) {
+                    Platform.runLater(() -> {
+                        if (checkRole(currentUser)) {
+                            try {
+                                App.setRoot("EmployeeMenu.fxml");
+                            } catch (IOException ex) {
+                                Logger.getLogger(SigninController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        } else {
+                            try {
+                                App.setRoot("CustomerMenu.fxml");
+                            } catch (IOException ex) {
                             Logger.getLogger(SigninController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                         }
-                    } else {
-                        try {
-                            App.setRoot("CustomerMenu.fxml");
-                        } catch (IOException ex) {
-                            Logger.getLogger(SigninController.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
+                    });
+                }
+                else {
+                    Platform.runLater(() -> {
+                    showAlert("Error signing in.\nCheck email and password and try again");
                 });
+                }
             } catch (FirebaseAuthException | IllegalArgumentException ex) {
                 Platform.runLater(() -> {
                     showAlert("Error signing in.\nCheck email and password and try again");
@@ -92,12 +99,8 @@ public class SigninController {
     }
 
     public boolean checkRole(UserRecord u) {
-
-        String userEmail = u.getEmail();
-        Firestore db = FirestoreClient.getFirestore();
-        Query query = db.collection("User")
-                .whereEqualTo("email", userEmail).limit(1);
-        ApiFuture<QuerySnapshot> querySnapshot = query.get();
+      
+        ApiFuture<QuerySnapshot> querySnapshot = getUserInfoQuery(u);
         try {
             for (DocumentSnapshot document : querySnapshot.get().getDocuments()) {
                 role = document.get("role").toString();
@@ -116,6 +119,27 @@ public class SigninController {
         alert.setTitle("Sign In Error");
         alert.setHeaderText(null);
         alert.showAndWait();
+    }
+    
+    private String getPassword(UserRecord u) {
+        ApiFuture<QuerySnapshot> querySnapshot = getUserInfoQuery(u);
+        try {
+            for (DocumentSnapshot document : querySnapshot.get().getDocuments()) {
+                password = document.get("password").toString();
+            }
+        } catch (InterruptedException | ExecutionException ex) {
+            Logger.getLogger(SigninController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return password;
+    }
+    
+    private ApiFuture<QuerySnapshot> getUserInfoQuery(UserRecord u) {
+        String userEmail = u.getEmail();
+        Firestore db = FirestoreClient.getFirestore();
+        Query query = db.collection("User")
+                .whereEqualTo("email", userEmail).limit(1);
+        ApiFuture<QuerySnapshot> querySnapshot = query.get();
+        return querySnapshot;
     }
 
 }
