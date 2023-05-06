@@ -16,12 +16,19 @@ public class MenuItem {
     private double price;
     private String ingredients;
     private Image image;
+    private int quantity;
 
     public MenuItem(String name, double price, String ingredients, Image image) {
         this.name = name;
         this.price = price;
         this.ingredients = ingredients;
         this.image = image;
+    }
+    
+    public MenuItem(String name, double price, int quantity) {
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
     }
 
     public String getName() {
@@ -38,6 +45,10 @@ public class MenuItem {
 
     public Image getImage() {
         return image;
+    }
+    
+    public int getQuantity() {
+        return quantity;
     }
 
     public void setName(String name) {
