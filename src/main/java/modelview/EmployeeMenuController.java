@@ -45,7 +45,7 @@ public class EmployeeMenuController {
     
     @FXML
     private void switchToMenu() throws IOException {
-        App.setRoot("EmployeesBakeryMenu.fxml");
+        App.setRoot("EmployeeBakeryMenu.fxml");
         //App.setRoot("menuPage.fxml");
     }
     

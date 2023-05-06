@@ -15,6 +15,7 @@ public class MenuItem {
     private String name;
     private double price;
     private String ingredients;
+    private int quanitity;
     private Image image;
     private int quantity;
 
@@ -66,5 +67,14 @@ public class MenuItem {
     public void setImage(Image image) {
         this.image = image;
     }
+
+    public int getQuanitity() {
+        return quanitity;
+    }
+
+    public void setQuanitity(int quanitity) {
+        this.quanitity = quanitity;
+    }
+    
     
 }

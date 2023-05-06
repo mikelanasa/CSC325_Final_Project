@@ -51,5 +51,11 @@ public class MenuItemView extends VBox {
         //setSpacing(5);
         getChildren().addAll(imageView, nameLabel, priceLabel, ingredientsLabel);
     }
+    
+    public ImageView getImageView() {
+        return imageView;
+    }
+    
+    
 
 }
