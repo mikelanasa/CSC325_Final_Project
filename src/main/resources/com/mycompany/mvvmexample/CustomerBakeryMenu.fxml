@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="modelview.BakeryMenuController">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="modelview.CustomerBakeryMenuController">
   <tabs>
     <Tab text="Menu">
          <content>
@@ -46,8 +46,9 @@
          <content>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="logOutButton" alignment="CENTER" layoutX="273.0" layoutY="159.0" mnemonicParsing="false" onAction="#switchToPrimary" style="-fx-background-color: #C02E28;" text="Log Out" textFill="WHITE" />
-                  <Button fx:id="shutDownButton" alignment="CENTER" layoutX="265.0" layoutY="198.0" mnemonicParsing="false" onAction="#shutDownApp" style="-fx-background-color: #C02E28;" text="Shut Down" textFill="WHITE" />
+                  <Button fx:id="logOutButton" alignment="CENTER" layoutX="370.0" layoutY="153.0" mnemonicParsing="false" onAction="#switchToPrimary" style="-fx-background-color: #C02E28;" text="Log Out" textFill="WHITE" />
+                  <Button fx:id="shutDownButton" alignment="CENTER" layoutX="362.0" layoutY="196.0" mnemonicParsing="false" onAction="#shutDownApp" style="-fx-background-color: #C02E28;" text="Shut Down" textFill="WHITE" />
+                  <Button layoutX="374.0" layoutY="110.0" mnemonicParsing="false" onAction="#switchToHome" style="-fx-background-color: #C02E28;" text="Home" textFill="WHITE" />
                </children>
             </AnchorPane>
          </content>

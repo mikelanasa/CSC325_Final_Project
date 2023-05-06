@@ -34,7 +34,7 @@ import viewmodel.MenuItemView;
  *
  * @author erickcruz
  */
-public class BakeryMenuController {
+public class CustomerBakeryMenuController {
 
     @FXML
     private Button logOutButton;
@@ -54,7 +54,13 @@ public class BakeryMenuController {
     private void switchToPrimary() throws IOException {
         App.setRoot("logInPage.fxml");
     }
-
+    
+    @FXML
+    private void switchToHome() throws IOException {
+        App.setRoot("CustomerMenu.fxml");
+    }
+    
+    
     @FXML
     private void shutDownApp() {
         Platform.exit();

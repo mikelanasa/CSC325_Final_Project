@@ -17,7 +17,6 @@ import javafx.scene.input.MouseEvent;
 import com.mycompany.mvvmexample.App;
 
 public class CustomerMenuController {
-    
 
     @FXML
     private ResourceBundle resources;
@@ -39,7 +38,7 @@ public class CustomerMenuController {
 
     @FXML
     private Button orderStatusBttn;
-    
+
     @FXML
     private void switchToSecondary() throws IOException {
         App.setRoot("logInPage.fxml");
@@ -47,7 +46,13 @@ public class CustomerMenuController {
     
     @FXML
     private void switchToMenu() throws IOException {
-        App.setRoot("BakeryMenu.fxml");
+        App.setRoot("CustomerBakeryMenu.fxml");
+    }
+
+
+    @FXML
+    private void switchToHome() throws IOException {
+        App.setRoot("CustomerMenu.fxml");
     }
 
     @FXML
@@ -57,7 +62,7 @@ public class CustomerMenuController {
 
     @FXML
     void logOut(MouseEvent event) {
-        
+
     }
 
     @FXML
