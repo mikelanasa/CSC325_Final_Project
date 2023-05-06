@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="436.0" prefWidth="461.0" spacing="5.0" style="-fx-background-color: #fffff'f;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="modelview.EmployeeMenuController">
+<VBox alignment="CENTER" prefHeight="436.0" prefWidth="461.0" spacing="5.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="modelview.EmployeeMenuController">
   <children>
       <Group />
       <Group />
