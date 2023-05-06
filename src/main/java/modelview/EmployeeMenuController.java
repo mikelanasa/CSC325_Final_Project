@@ -48,6 +48,11 @@ public class EmployeeMenuController {
         App.setRoot("EmployeesBakeryMenu.fxml");
         //App.setRoot("menuPage.fxml");
     }
+    
+    @FXML
+    private void switchToViewOrders() throws IOException {
+        App.setRoot("EmployeeViewOrders.fxml");
+    }
 
     @FXML
     void contactCustomer(MouseEvent event) {
