@@ -7,6 +7,7 @@ package modelview;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.WriteResult;
+import com.google.common.util.concurrent.MoreExecutors;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
 import com.mycompany.mvvmexample.App;
@@ -58,9 +59,9 @@ public class SignupController {
             showAlert("Error creating account.\nAll fields must be completed.");
         } else if (!passwordTextField1.getText().equals(passwordTextField2.getText())) {
             showAlert("Passwords do not match");
-        }else if(passwordTextField1.getText().length() < 6 ){
+        } else if (passwordTextField1.getText().length() < 6) {
             showAlert("Password must be larger than 6 characters");
-        }else {
+        } else {
             Thread signUpThread = new Thread(() -> {
                 UserRecord.CreateRequest request = new UserRecord.CreateRequest()
                         .setDisplayName(firstNameTextField.getText())
@@ -69,9 +70,9 @@ public class SignupController {
                 try {
                     userRecord = App.fauth.createUser(request);
                     Platform.runLater(() -> {
-                        
+
                         addData();
-                        
+
                         // handleButton_signIn(event);
                     });
                 } catch (FirebaseAuthException ex) {
@@ -81,14 +82,6 @@ public class SignupController {
 
             signUpThread.start();
         }
-        
-        firstNameTextField.clear();
-        lastNameTextField.clear();
-        emailTextField.clear();
-        phoneNumberTextField.clear();
-        passwordTextField1.clear();
-        passwordTextField2.clear();
-        verificationTextField.clear();
 
     } // ends handleButton_signUp
 
@@ -111,6 +104,12 @@ public class SignupController {
             }
             // Asynchronously write data
             ApiFuture<WriteResult> result = docRef.set(data);
+            result.addListener(() -> {
+                // Clear all the text fields
+                Platform.runLater(() -> {
+                    clearTextFields();
+                });
+            }, MoreExecutors.directExecutor());
         });
     } // ends addData
 
@@ -120,6 +119,17 @@ public class SignupController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    @FXML
+    private void clearTextFields() {
+        firstNameTextField.clear();
+        lastNameTextField.clear();
+        emailTextField.clear();
+        phoneNumberTextField.clear();
+        passwordTextField1.clear();
+        passwordTextField2.clear();
+        verificationTextField.clear();
     }
 
 }
