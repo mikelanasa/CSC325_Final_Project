@@ -17,14 +17,21 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ForkJoinPool;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -40,6 +47,11 @@ import viewmodel.MenuItemView;
  */
 public class CustomerBakeryMenuController {
 
+    private double totalPrice;
+
+    @FXML
+    private TabPane tabPane;
+
     @FXML
     private Button logOutButton;
 
@@ -50,7 +62,10 @@ public class CustomerBakeryMenuController {
     private Button shutDownButton;
 
     @FXML
-    private Button AddtoOrder;
+    private Button addtoOrder;
+
+    @FXML
+    private Button clearCart;
 
     @FXML
     private GridPane CartGrid;
@@ -75,7 +90,17 @@ public class CustomerBakeryMenuController {
 
     @FXML
     void initialize() throws FileNotFoundException {
-        List<MenuItem> menuItems = new ArrayList<MenuItem>();
+
+        //List<MenuItem> menuItems = new ArrayList<MenuItem>();
+        menuItems = getMenuItems();
+        MenuDisplay(menuItems.subList(0, Math.min(9, menuItems.size())));
+        CartGrid.setGridLinesVisible(true);
+    }
+
+    /*
+    @FXML
+    void initialize() throws FileNotFoundException {
+        //List<MenuItem> menuItems = new ArrayList<MenuItem>();
 
         for (int i = 0; i < 9; i++) {
 
@@ -87,7 +112,7 @@ public class CustomerBakeryMenuController {
         MenuDisplay(menuItems);
 
     }
-
+     */
     private void MenuDisplay(List<MenuItem> menuItems) {
 
         for (int i = 0; i < menuItems.size(); i++) {
@@ -105,14 +130,54 @@ public class CustomerBakeryMenuController {
             //AddtoOrder = new Button("Add to Order");
 
         }
+        CartGrid.setGridLinesVisible(true);
     }
 
     private List<MenuItem> getMenuItems() {
+        List<MenuItem> menuItems = new ArrayList<>();
+        CountDownLatch latch = new CountDownLatch(1);
+
+        Firestore db = FirestoreClient.getFirestore();
+        ApiFuture<QuerySnapshot> future = db.collection("MenuItem").get();
+
+        future.addListener(() -> {
+            try {
+                List<QueryDocumentSnapshot> documents = future.get().getDocuments();
+                for (QueryDocumentSnapshot document : documents) {
+                    Image image = new Image(document.get("image").toString());
+                    String name = document.get("name").toString();
+                    double price = Double.parseDouble(document.get("price").toString());
+                    String description = document.get("description").toString();
+
+                    MenuItem m = new MenuItem(name, price, description, image);
+                    menuItems.add(m);
+                }
+            } catch (InterruptedException ex) {
+                Logger.getLogger(CustomerBakeryMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ExecutionException ex) {
+                Logger.getLogger(CustomerBakeryMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                latch.countDown(); // Signal that the task is complete
+            }
+        }, ForkJoinPool.commonPool()); // Use the common fork-join pool as the executor
+
+        try {
+            latch.await(); // Wait for the task to complete
+        } catch (InterruptedException e) {
+            Logger.getLogger(MenuController.class.getName()).log(Level.SEVERE, null, e);
+            Thread.currentThread().interrupt();
+        }
+
+        return menuItems;
+    }
+
+    /*
+    private List<MenuItem> getMenuItems() {
         // Create an Executor to run the code on a separate thread
-        //Executor executor = Executors.newSingleThreadExecutor();
+        Executor executor = Executors.newSingleThreadExecutor();
 
         // Submit a task to the Executor to run getMenuItems on a separate thread
-        //executor.execute(() -> {
+        executor.execute(() -> {
         try {
             Firestore db = FirestoreClient.getFirestore();
             // Create a reference to the cities collection
@@ -120,7 +185,7 @@ public class CustomerBakeryMenuController {
 
             // asynchronously retrieve all documents
             ApiFuture<QuerySnapshot> future = db.collection("MenuItem").get();
-            // future.get() blocks on response
+             future.get(); //blocks on response
             List<QueryDocumentSnapshot> documents = future.get().getDocuments();
             for (QueryDocumentSnapshot document : documents) {
                 Image image = new Image(document.get("image").toString());
@@ -134,11 +199,11 @@ public class CustomerBakeryMenuController {
         } catch (InterruptedException | ExecutionException ex) {
             Logger.getLogger(MenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        // });
+         });
 
         return menuItems;
     } // ends getMenuItems
-
+     */
     private int cartColumn = 0; // Keeps track of the current column index in the CartGrid
     private int cartRow = 0; // Keeps track of the current row index in the CartGrid
 
@@ -149,13 +214,13 @@ public class CustomerBakeryMenuController {
         // Add the CartItemView to the CartGrid
         CartGrid.add(cartItemView, cartColumn, cartRow);
         cartItems.add(menuItem);
+        totalPrice = totalPrice + menuItem.getPrice();
+        System.out.println(totalPrice);
 
         cartItemView.getImageView().setOnMouseClicked(event -> {
             CartGrid.getChildren().remove(cartItemView); // Remove the MenuItemView from the CartGrid
             cartItems.remove(cartItemView); // Remove the MenuItemView from the MenuItemViews list
         });
-        
-        
 
         // Increment the column index for the next item
         cartColumn++;
@@ -174,27 +239,21 @@ public class CustomerBakeryMenuController {
         //int quantity = Integer.parseInt(newValue);
         // updateCartItemQuantity(cartItemView, quantity);
         //});
-        shiftItemsInCartGrid(CartGrid,cartColumn,cartRow);
         System.out.println(cartItems.toArray());
     }
 
- 
-
-    private void shiftItemsInCartGrid(GridPane cartGrid, int columnIndex, int rowIndex) {
-        // Iterate through the remaining items in the CartGrid
-        for (Node node : cartGrid.getChildren()) {
-            if (node instanceof MenuItemView) {
-                MenuItemView itemView = (MenuItemView) node;
-
-                // Retrieve the column and row index of the current MenuItemView
-                int itemColumnIndex = GridPane.getColumnIndex(itemView);
-                int itemRowIndex = GridPane.getRowIndex(itemView);
-
-                // Shift the item's position if it is after the removed item
-                if (itemColumnIndex == columnIndex && itemRowIndex > rowIndex) {
-                    GridPane.setRowIndex(itemView, itemRowIndex - 1);
-                }
-            }
-        }
+    @FXML
+    private void clearTheCart() {
+        cartItems.clear();
+        System.out.println("cleared");
+        //CartGrid.getChildren().retainAll(lineslayer);
+        CartGrid.getChildren().clear();
+        cartColumn = 0;
+        cartRow = 0;
+        CartGrid.setGridLinesVisible(true);
+        totalPrice = 0;
     }
+
+   
+
 }
