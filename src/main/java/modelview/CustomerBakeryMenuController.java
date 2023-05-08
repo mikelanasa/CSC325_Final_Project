@@ -134,7 +134,6 @@ public class CustomerBakeryMenuController {
     }
 
     private List<MenuItem> getMenuItems() {
-        List<MenuItem> menuItems = new ArrayList<>();
         CountDownLatch latch = new CountDownLatch(1);
 
         Firestore db = FirestoreClient.getFirestore();

@@ -17,7 +17,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ForkJoinPool;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
@@ -67,19 +69,12 @@ public class EmployeeBakeryMenuController {
         Platform.exit();
     }
 
-    @FXML
+   @FXML
     void initialize() throws FileNotFoundException {
-        List<MenuItem> menuItems = new ArrayList<MenuItem>();
 
-        for (int i = 0; i < 9; i++) {
-
-            menuItems.add(getMenuItems().get(i));
-            //Image image = new Image(getClass().getResourceAsStream("/com/mycompany/mvvmexample/bakerylogo.png"));
-            //MenuItem NewItem = new MenuItem(name, price, description, image);
-            //menuItems.add(NewItem);  
-        }
-        MenuDisplay(menuItems);
-
+        //List<MenuItem> menuItems = new ArrayList<MenuItem>();
+        menuItems = getMenuItems();
+        MenuDisplay(menuItems.subList(0, Math.min(9, menuItems.size())));
     }
 
     private void MenuDisplay(List<MenuItem> menuItems) {
@@ -96,33 +91,38 @@ public class EmployeeBakeryMenuController {
     }
 
     private List<MenuItem> getMenuItems() {
-        // Create an Executor to run the code on a separate thread
-        //Executor executor = Executors.newSingleThreadExecutor();
+        CountDownLatch latch = new CountDownLatch(1);
 
-        // Submit a task to the Executor to run getMenuItems on a separate thread
-        //executor.execute(() -> {
-        try {
-            Firestore db = FirestoreClient.getFirestore();
-            // Create a reference to the cities collection
-            //CollectionReference menuItem = db.collection("MenuItem");
+        Firestore db = FirestoreClient.getFirestore();
+        ApiFuture<QuerySnapshot> future = db.collection("MenuItem").get();
 
-            // asynchronously retrieve all documents
-            ApiFuture<QuerySnapshot> future = db.collection("MenuItem").get();
-            // future.get() blocks on response
-            List<QueryDocumentSnapshot> documents = future.get().getDocuments();
-            for (QueryDocumentSnapshot document : documents) {
-                Image image = new Image(document.get("image").toString());
-                String name = document.get("name").toString();
-                double price = parseDouble(document.get("price").toString());
-                String description = document.get("description").toString();
+        future.addListener(() -> {
+            try {
+                List<QueryDocumentSnapshot> documents = future.get().getDocuments();
+                for (QueryDocumentSnapshot document : documents) {
+                    Image image = new Image(document.get("image").toString());
+                    String name = document.get("name").toString();
+                    double price = Double.parseDouble(document.get("price").toString());
+                    String description = document.get("description").toString();
 
-                MenuItem m = new MenuItem(name, price, description, image);
-                menuItems.add(m);
+                    MenuItem m = new MenuItem(name, price, description, image);
+                    menuItems.add(m);
+                }
+            } catch (InterruptedException ex) {
+                Logger.getLogger(CustomerBakeryMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ExecutionException ex) {
+                Logger.getLogger(CustomerBakeryMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                latch.countDown(); // Signal that the task is complete
             }
-        } catch (InterruptedException | ExecutionException ex) {
-            Logger.getLogger(MenuController.class.getName()).log(Level.SEVERE, null, ex);
+        }, ForkJoinPool.commonPool()); // Use the common fork-join pool as the executor
+
+        try {
+            latch.await(); // Wait for the task to complete
+        } catch (InterruptedException e) {
+            Logger.getLogger(MenuController.class.getName()).log(Level.SEVERE, null, e);
+            Thread.currentThread().interrupt();
         }
-        // });
 
         return menuItems;
     } // ends getMenuItems
