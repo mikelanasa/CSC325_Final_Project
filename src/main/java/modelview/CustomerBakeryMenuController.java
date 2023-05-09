@@ -253,6 +253,12 @@ public class CustomerBakeryMenuController {
         totalPrice = 0;
     }
 
-   
+    @FXML
+    private void addToTheOrder() {
+        System.out.println("Add order");
+        
+
+        clearTheCart();
+    }
 
 }
