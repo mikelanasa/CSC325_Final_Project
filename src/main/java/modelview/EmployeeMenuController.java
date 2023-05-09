@@ -55,8 +55,8 @@ public class EmployeeMenuController {
     }
 
     @FXML
-    void contactCustomer(MouseEvent event) {
-
+    void contactCustomer(MouseEvent event) throws IOException {
+        App.setRoot("EmployeeContactCustomer.fxml");
     }
 
     @FXML
