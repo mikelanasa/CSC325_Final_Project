@@ -26,7 +26,7 @@
             </GridPane>
          </content>
     </Tab>
-      <Tab text="Log Out">
+      <Tab text="Options">
          <content>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>

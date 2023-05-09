@@ -51,7 +51,7 @@ public class OrderStatusController {
     
     @FXML
     private void switchToHome() throws IOException {
-        App.setRoot("EmployeeMenu.fxml");
+        App.setRoot("CustomerMenu.fxml");
     }
     
     
