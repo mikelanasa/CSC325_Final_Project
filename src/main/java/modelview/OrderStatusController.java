@@ -17,11 +17,14 @@ import javafx.scene.image.Image;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.mycompany.mvvmexample.App;
+import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import static modelview.SigninController.currentUser;
 
 /**
@@ -40,6 +43,22 @@ public class OrderStatusController {
     private Circle OrderBakedPic;
     @FXML
     private Circle OrderReadyPic;
+    
+    @FXML
+    private void switchToPrimary() throws IOException {
+        App.setRoot("logInPage.fxml");
+    }
+    
+    @FXML
+    private void switchToHome() throws IOException {
+        App.setRoot("EmployeeMenu.fxml");
+    }
+    
+    
+    @FXML
+    private void shutDownApp() {
+        Platform.exit();
+    }
 
     public OrderStatusController() {
     }
@@ -49,7 +68,7 @@ public class OrderStatusController {
         startOrderProcessing();
         
         currentUser = SigninController.currentUser;
-        RetrieveStoredTime(currentUser);
+        //RetrieveStoredTime(currentUser);
     }
 
     public void displayPicOnTimeline() {
@@ -93,16 +112,16 @@ public class OrderStatusController {
                 return null;
             }
         };
-
+    }
     
     
    
-    
+    /*
     public long  RetrieveStoredTime(UserRecord u){
         
        
     }
-    
+    */
     public void StoreTime(UserRecord u){
         
     }

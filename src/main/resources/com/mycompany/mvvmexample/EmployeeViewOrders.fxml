@@ -22,9 +22,9 @@
          <content>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="logOutButton" alignment="CENTER" layoutX="370.0" layoutY="153.0" mnemonicParsing="false" onAction="#switchToPrimary" style="-fx-background-color: #C02E28;" text="Log Out" textFill="WHITE" />
-                  <Button fx:id="shutDownButton" alignment="CENTER" layoutX="362.0" layoutY="196.0" mnemonicParsing="false" onAction="#shutDownApp" style="-fx-background-color: #C02E28;" text="Shut Down" textFill="WHITE" />
-                  <Button layoutX="374.0" layoutY="110.0" mnemonicParsing="false" onAction="#switchToHome" style="-fx-background-color: #C02E28;" text="Home" textFill="WHITE" />
+                  <Button fx:id="logOutButton" alignment="CENTER" layoutX="14.0" layoutY="56.0" mnemonicParsing="false" onAction="#switchToPrimary" style="-fx-background-color: #C02E28;" text="Log Out" textFill="WHITE" />
+                  <Button fx:id="shutDownButton" alignment="CENTER" layoutX="14.0" layoutY="98.0" mnemonicParsing="false" onAction="#shutDownApp" style="-fx-background-color: #C02E28;" text="Shut Down" textFill="WHITE" />
+                  <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#switchToHome" style="-fx-background-color: #C02E28;" text="Home" textFill="WHITE" />
                </children>
             </AnchorPane>
          </content>
