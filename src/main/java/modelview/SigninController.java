@@ -62,7 +62,7 @@ public class SigninController {
                 currentUser = FirebaseAuth.getInstance().getUserByEmail(email);
                 
                 String userPass = getPassword(currentUser);
-                System.out.println(userPass);
+                //System.out.println(userPass);
                 if(pass.equals(userPass)) {
                     Platform.runLater(() -> {
                         if (checkRole(currentUser)) {

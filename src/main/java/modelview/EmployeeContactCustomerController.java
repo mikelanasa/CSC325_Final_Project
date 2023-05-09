@@ -20,6 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
@@ -30,31 +31,30 @@ import models.CustomerInfo;
  * @author mikel
  */
 public class EmployeeContactCustomerController {
-    
+
     @FXML
     private Button getCustomerInfo;
-    
+
     @FXML
     private Button logOutButton;
 
     @FXML
     private Button shutDownButton;
-    
+
     @FXML
     private Text customerName;
-    
+
     @FXML
     private Text customerPhone;
-    
+
     @FXML
     private TextField emailTextField;
-    
+
     private String name;
     private String phone;
     static UserRecord currentUser;
     private CustomerInfo currentCustomer;
-    
-    
+
     @FXML
     private void switchToPrimary() throws IOException {
         App.setRoot("logInPage.fxml");
@@ -69,21 +69,27 @@ public class EmployeeContactCustomerController {
     private void shutDownApp() {
         Platform.exit();
     }
-    
+
     @FXML
     private void handleButton_ShowInfo() {
         try {
             String email = emailTextField.getText();
+            if (!isEmailExists(email)) {
+            showAlert("Email does not exist in the database.");
+            return;
+        }
             currentUser = FirebaseAuth.getInstance().getUserByEmail(email);
             currentCustomer = getContactInfo(currentUser);
             customerName.setText(currentCustomer.getName());
             customerPhone.setText(currentCustomer.getPhone());
-            
+            //clearField();
+
         } catch (FirebaseAuthException ex) {
-            Logger.getLogger(EmployeeContactCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(EmployeeContactCustomerController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }
-    
+
     private CustomerInfo getContactInfo(UserRecord u) {
         ApiFuture<QuerySnapshot> querySnapshot = getUserInfoQuery(u);
         CustomerInfo customer = new CustomerInfo();
@@ -95,11 +101,11 @@ public class EmployeeContactCustomerController {
                 customer.setPhone(document.get("phoneNumber").toString());
             }
         } catch (InterruptedException | ExecutionException ex) {
-            Logger.getLogger(SigninController.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(SigninController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return customer;
     }
-    
+
     private ApiFuture<QuerySnapshot> getUserInfoQuery(UserRecord u) {
         String userEmail = u.getEmail();
         Firestore db = FirestoreClient.getFirestore();
@@ -108,5 +114,27 @@ public class EmployeeContactCustomerController {
         ApiFuture<QuerySnapshot> querySnapshot = query.get();
         return querySnapshot;
     }
+
+    private void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Search Customer");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    private boolean isEmailExists(String email) {
+        try {
+            UserRecord userRecord = FirebaseAuth.getInstance().getUserByEmail(email);
+            return (userRecord != null);
+        } catch (FirebaseAuthException ex) {
+            //Logger.getLogger(EmployeeContactCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
     
+    private void clearField(){
+        emailTextField.clear();
+    }
+
 }

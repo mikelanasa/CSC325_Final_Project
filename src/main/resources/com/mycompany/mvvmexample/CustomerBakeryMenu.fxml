@@ -42,7 +42,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                   </GridPane>
-                  <Button fx:id="addToTheOrder" layoutX="35.0" layoutY="22.0" mnemonicParsing="false" style="-fx-background-color: #C02E28;" text="Add To Order" textFill="WHITE" />
+                  <Button layoutX="35.0" layoutY="22.0" mnemonicParsing="false" onAction="#addToTheOrder" style="-fx-background-color: #C02E28;" text="Add To Order" textFill="WHITE" />
                   <Button fx:id="clearCart" layoutX="241.0" layoutY="23.0" mnemonicParsing="false" onAction="#clearTheCart" style="-fx-background-color: #C02E28;" text="Clear" textFill="WHITE" />
                </children>
             </AnchorPane>
