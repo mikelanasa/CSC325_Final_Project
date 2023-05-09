@@ -5,9 +5,12 @@
 package modelview;
 
 import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
+import com.google.cloud.firestore.WriteResult;
+import com.google.common.util.concurrent.MoreExecutors;
 import com.google.firebase.cloud.FirestoreClient;
 import com.mycompany.mvvmexample.App;
 import java.io.FileNotFoundException;
@@ -15,8 +18,12 @@ import java.io.IOException;
 import static java.lang.Double.parseDouble;
 import java.net.URL;
 import java.util.ArrayList;
+import static java.util.Collections.list;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
@@ -37,7 +44,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javax.swing.JOptionPane;
+import models.CustomerOrder;
 import models.MenuItem;
+import static modelview.SigninController.currentUser;
 import viewmodel.MenuItemView;
 
 /**
@@ -48,6 +58,7 @@ import viewmodel.MenuItemView;
 public class CustomerBakeryMenuController {
 
     private double totalPrice;
+    private final String email = currentUser.getEmail();
 
     @FXML
     private TabPane tabPane;
@@ -256,9 +267,32 @@ public class CustomerBakeryMenuController {
     @FXML
     private void addToTheOrder() {
         System.out.println("Add order");
-        
-
-        clearTheCart();
+        CustomerOrder order = new CustomerOrder();
+        order.setEmail(email);
+        order.setOrder(cartItems);
+        addData(order);
+        //clearTheCart();
     }
+    
+    public void addData(CustomerOrder o) {
+        Platform.runLater(() -> {
+            DocumentReference docRef = App.fstore.collection("Orders").document(UUID.randomUUID().toString());
+            // Add document data using a hashmap
+            Map<String, Object> data = new HashMap<>();
+            data.put("email", o.getEmail());
+            for(int i = 0; i < o.getOrder().size(); i++) {
+                String name = o.getOrder().get(i).getName(); 
+                data.put("item"+String.valueOf(i), name);
+            }
+            // Asynchronously write data
+            ApiFuture<WriteResult> result = docRef.set(data);
+            result.addListener(() -> {
+                // Clear all the text fields
+                //Platform.runLater(() -> {
+                  //  clearTextFields();
+                //});
+            }, MoreExecutors.directExecutor());
+        });
+    } // ends addData
 
 }
