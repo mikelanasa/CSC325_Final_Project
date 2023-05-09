@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Circle?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="modelview.OrderStatusController">
+  <tabs>
+    <Tab text="Untitled Tab 1">
+         <content>
+            <Pane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <ProgressBar fx:id="step1ProgressBar" layoutX="102.0" layoutY="152.0" prefHeight="18.0" prefWidth="180.0" progress="0.0" />
+                  <Circle fx:id="OrderPlacedPic" fill="DODGERBLUE" layoutX="79.0" layoutY="161.0" radius="25.0" stroke="BLACK" strokeType="INSIDE" />
+                  <ProgressBar fx:id="step2ProgressBar" layoutX="319.0" layoutY="152.0" prefHeight="18.0" prefWidth="191.0" progress="0.0" />
+                  <Circle fx:id="OrderReadyPic" fill="DODGERBLUE" layoutX="530.0" layoutY="161.0" radius="25.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fx:id="OrderBakedPic" fill="DODGERBLUE" layoutX="300.0" layoutY="161.0" radius="25.0" stroke="BLACK" strokeType="INSIDE" />
+               </children>
+            </Pane>
+         </content></Tab>
+    <Tab text="Untitled Tab 2" />
+  </tabs>
+</TabPane>

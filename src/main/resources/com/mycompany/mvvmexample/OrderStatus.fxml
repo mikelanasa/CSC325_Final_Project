@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+
+<VBox xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="OrderStatusController">
+    <Label text="Order Status" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+    <HBox spacing="10" alignment="CENTER">
+        <VBox spacing="10" alignment="CENTER">
+            <ProgressBar fx:id="step1ProgressBar" progress="1.0" prefWidth="200"/>
+            <HBox spacing="5" alignment="CENTER">
+                <Circle radius="15" fill="#00FF00"/>
+                <ImageView fx:id="step1ImageView" fitHeight="30" fitWidth="30" preserveRatio="true">
+                    <image>
+                       
+                    </image>
+                </ImageView>
+            </HBox>
+            <Label fx:id="step1Label" text="Step 1: Placed" style="-fx-font-size: 16px;"/>
+        </VBox>
+
+        <VBox spacing="10" alignment="CENTER">
+            <ProgressBar fx:id="step2ProgressBar" progress="0.5" prefWidth="200"/>
+            <HBox spacing="5" alignment="CENTER">
+                <Circle radius="15" fill="#FFA500"/>
+                <ImageView fx:id="step2ImageView" fitHeight="30" fitWidth="30" preserveRatio="true">
+                    <image>
+                       
+                    </image>
+                </ImageView>
+            </HBox>
+            <Label fx:id="step2Label" text="Step 2: In Progress" style="-fx-font-size: 16px;"/>
+        </VBox>
+
+        <VBox spacing="10" alignment="CENTER">
+            <ProgressBar fx:id="step3ProgressBar" progress="0.0" prefWidth="200"/>
+            <HBox spacing="5" alignment="CENTER">
+                <Circle radius="15" fill="#0000FF"/>
+                <ImageView fx:id="step3ImageView" fitHeight="30" fitWidth="30" preserveRatio="true">
+                    <image>
+                        <Image url="@CSC325_Final_Project\src\main\resources\com\mycompany\mvvmexample\image1.png"/>
+                    </image>
+                </ImageView>
+            </HBox>
+            <Label fx:id="step3Label" text="Step 3: Not Started" style="-fx-font-size: 16px;"/>
+        </VBox>
+    </HBox>
+</VBox>

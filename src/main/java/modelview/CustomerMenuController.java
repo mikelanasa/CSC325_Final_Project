@@ -66,8 +66,8 @@ public class CustomerMenuController {
     }
 
     @FXML
-    void orderStatus(MouseEvent event) {
-
+    void orderStatus(MouseEvent event) throws IOException {
+         App.setRoot("OrderStatus2.fxml");
     }
 
     @FXML

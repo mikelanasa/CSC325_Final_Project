@@ -60,7 +60,9 @@ public class SigninController {
                 String pass = passwordTextField.getText();
                 // compare input to firebase authentication
                 currentUser = FirebaseAuth.getInstance().getUserByEmail(email);
+                
                 String userPass = getPassword(currentUser);
+                System.out.println(userPass);
                 if(pass.equals(userPass)) {
                     Platform.runLater(() -> {
                         if (checkRole(currentUser)) {
@@ -85,6 +87,7 @@ public class SigninController {
                 }
             } catch (FirebaseAuthException | IllegalArgumentException ex) {
                 Platform.runLater(() -> {
+                    
                     showAlert("Error signing in.\nCheck email and password and try again");
                 });
             }
@@ -140,6 +143,19 @@ public class SigninController {
                 .whereEqualTo("email", userEmail).limit(1);
         ApiFuture<QuerySnapshot> querySnapshot = query.get();
         return querySnapshot;
+    }
+    
+    public String getLogTime(UserRecord userRecord) {
+        String logTime = null;
+        ApiFuture<QuerySnapshot> querySnapshot = getUserInfoQuery(userRecord);
+        try {
+            for (DocumentSnapshot document : querySnapshot.get().getDocuments()) {
+                logTime = document.getString("logTime");
+            }
+        } catch (InterruptedException | ExecutionException ex) {
+            Logger.getLogger(SigninController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return logTime;
     }
 
 }
