@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/19">
+  <tabs>
+    <Tab text="Update Order">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+      </content>
+    </Tab>
+    <Tab text="Option">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="logOutButton" alignment="CENTER" layoutX="14.0" layoutY="50.0" mnemonicParsing="false" onAction="#switchToPrimary" style="-fx-background-color: #C02E28;" text="Log Out" textFill="WHITE" />
+                  <Button fx:id="shutDownButton" alignment="CENTER" layoutX="14.0" layoutY="87.0" mnemonicParsing="false" onAction="#shutDownApp" style="-fx-background-color: #C02E28;" text="Shut Down" textFill="WHITE" />
+                  <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#switchToHome" style="-fx-background-color: #C02E28;" text="Home" textFill="WHITE" />
+               </children></AnchorPane>
+      </content>
+    </Tab>
+  </tabs>
+</TabPane>

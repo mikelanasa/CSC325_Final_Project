@@ -54,6 +54,12 @@ public class CustomerMenuController {
     private void switchToHome() throws IOException {
         App.setRoot("CustomerMenu.fxml");
     }
+    
+    @FXML
+    private void switchToCancelOrder() throws IOException{
+        App.setRoot("CustomerCancelOrder.fxml");
+    }
+        
 
     @FXML
     void cancelOrder(MouseEvent event) {

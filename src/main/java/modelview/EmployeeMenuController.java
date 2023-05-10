@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package modelview;
+
 /**
  *
  * @author cyril
@@ -37,18 +38,18 @@ public class EmployeeMenuController {
 
     @FXML
     private Button ordersBttn;
-    
+
     @FXML
     private void switchToSecondary() throws IOException {
         App.setRoot("logInPage.fxml");
     }
-    
+
     @FXML
     private void switchToMenu() throws IOException {
         App.setRoot("EmployeeBakeryMenu.fxml");
         //App.setRoot("menuPage.fxml");
     }
-    
+
     @FXML
     private void switchToViewOrders() throws IOException {
         App.setRoot("EmployeeViewOrders.fxml");
@@ -57,6 +58,11 @@ public class EmployeeMenuController {
     @FXML
     void contactCustomer(MouseEvent event) throws IOException {
         App.setRoot("EmployeeContactCustomer.fxml");
+    }
+
+    @FXML
+    private void switchToUpdateOrderStatus() throws IOException {
+        App.setRoot("EmployeeUpdateOrderStatus.fxml");
     }
 
     @FXML
