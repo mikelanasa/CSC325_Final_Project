@@ -17,15 +17,21 @@ import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ForkJoinPool;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
+import models.CustomerOrder;
 import models.MenuItem;
 import viewmodel.MenuItemView;
 import viewmodel.OrderItemView;
@@ -49,6 +55,10 @@ public class EmployeeViewOrdersController {
     private Button shutDownButton;
     
     List<MenuItem> menuItems = new ArrayList<MenuItem>();
+    
+    List<CustomerOrder> allOrders = new ArrayList<CustomerOrder>();
+    
+    List<String> emails = new ArrayList<String>();
     
     @FXML
     private void switchToPrimary() throws IOException {
@@ -82,50 +92,47 @@ public class EmployeeViewOrdersController {
     }
     */
     
-    private void MenuDisplay(List<MenuItem> menuItems) {
-
-        for (int i = 0; i < menuItems.size(); i++) {
-            MenuItem menuItem = menuItems.get(i);
-            OrderItemView orderItemView = new OrderItemView(menuItem);
-            viewOrderListView.getItems().add(orderItemView);
-            //System.out.println(1%3);
-            //System.out.println(1/3);
-            //AddtoOrder = new Button("Add to Order");
-
+    @FXML
+    private void showOrders() { 
+        
+        List<String> showEmails = getOrders();
+        for(int i = 0; i < showEmails.size(); i++) {
+        
+            viewOrderListView.getItems().add(showEmails.get(i));
         }
+        //viewOrderListView.getItems().add("Item 2");
+        //viewOrderListView.getItems().add("Item 3");     
+        
     }
     
-    /*
-    private List<MenuItem> getMenuItems() {
-        // Create an Executor to run the code on a separate thread
-        //Executor executor = Executors.newSingleThreadExecutor();
+    private List<String> getOrders() {
+        CountDownLatch latch = new CountDownLatch(1);
 
-        // Submit a task to the Executor to run getMenuItems on a separate thread
-        //executor.execute(() -> {
-        try {
-            Firestore db = FirestoreClient.getFirestore();
-            // Create a reference to the cities collection
-            //CollectionReference menuItem = db.collection("MenuItem");
+        Firestore db = FirestoreClient.getFirestore();
+        ApiFuture<QuerySnapshot> future = db.collection("Orders").get();
 
-            // asynchronously retrieve all documents
-            ApiFuture<QuerySnapshot> future = db.collection("Orders").get();
-            // future.get() blocks on response
-            List<QueryDocumentSnapshot> documents = future.get().getDocuments();
-            for (QueryDocumentSnapshot document : documents) {
-                
-                String name = document.get(FieldPath.of("OrderItems[0]")).toString();
-                double price = parseDouble(document.get(FieldPath.of("OrderItems[2]")).toString());
-                int quantity = parseInt(document.get(FieldPath.of("OrderItems[1]")).toString());
-
-                MenuItem m = new MenuItem(name, price, quantity);
-                menuItems.add(m);
+        future.addListener(() -> {
+            try {
+                List<QueryDocumentSnapshot> documents = future.get().getDocuments();
+                for (QueryDocumentSnapshot document : documents) {
+                    String email = document.get("email").toString();
+                    
+                    emails.add(email);
+                }
+            } catch (InterruptedException | ExecutionException ex) {
+                Logger.getLogger(CustomerBakeryMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                latch.countDown(); // Signal that the task is complete
             }
-        } catch (InterruptedException | ExecutionException ex) {
-            Logger.getLogger(MenuController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        // });
+        }, ForkJoinPool.commonPool()); // Use the common fork-join pool as the executor
 
-        return menuItems;
-    } // ends getMenuItems
-    */
+        try {
+            latch.await(); // Wait for the task to complete
+        } catch (InterruptedException e) {
+            Logger.getLogger(MenuController.class.getName()).log(Level.SEVERE, null, e);
+            Thread.currentThread().interrupt();
+        }
+
+        return emails;
+    }
 }

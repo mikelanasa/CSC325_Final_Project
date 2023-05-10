@@ -14,6 +14,15 @@ public class CustomerOrder {
     
     private String email;
     public List<MenuItem> order;
+    public List<String> names;
+
+    public List<String> getNames() {
+        return names;
+    }
+
+    public void setNames(List<String> names) {
+        this.names = names;
+    }
 
     public String getEmail() {
         return email;
