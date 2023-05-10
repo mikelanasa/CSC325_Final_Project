@@ -37,8 +37,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -263,6 +266,17 @@ public class CustomerBakeryMenuController {
         CartGrid.setGridLinesVisible(true);
         totalPrice = 0;
     }
+    
+     @FXML
+    private void clearTheCartAfterOrder() {
+        System.out.println("cleared");
+        //CartGrid.getChildren().retainAll(lineslayer);
+        CartGrid.getChildren().clear();
+        cartColumn = 0;
+        cartRow = 0;
+        CartGrid.setGridLinesVisible(true);
+        totalPrice = 0;
+    }
 
     @FXML
     private void addToTheOrder() {
@@ -271,12 +285,14 @@ public class CustomerBakeryMenuController {
         order.setEmail(email);
         order.setOrder(cartItems);
         addData(order);
-        //clearTheCart();
+        clearTheCartAfterOrder();
+        
     }
     
     public void addData(CustomerOrder o) {
         Platform.runLater(() -> {
-            DocumentReference docRef = App.fstore.collection("Orders").document(UUID.randomUUID().toString());
+            String id = UUID.randomUUID().toString();
+            DocumentReference docRef = App.fstore.collection("Orders").document(id);
             // Add document data using a hashmap
             Map<String, Object> data = new HashMap<>();
             data.put("email", o.getEmail());
@@ -284,6 +300,7 @@ public class CustomerBakeryMenuController {
                 String name = o.getOrder().get(i).getName(); 
                 data.put("item"+String.valueOf(i), name);
             }
+            showAlert("Order id " +  id);
             // Asynchronously write data
             ApiFuture<WriteResult> result = docRef.set(data);
             result.addListener(() -> {
@@ -293,6 +310,15 @@ public class CustomerBakeryMenuController {
                 //});
             }, MoreExecutors.directExecutor());
         });
+        
     } // ends addData
+    
+    
+    private void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, message, ButtonType.OK);
+        alert.setTitle("Order ID");
+        alert.setHeaderText(null);
+        alert.showAndWait();
+    }
 
 }
