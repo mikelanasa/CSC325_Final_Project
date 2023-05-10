@@ -30,6 +30,13 @@ import javax.swing.JOptionPane;
  */
 public class SignupController {
 
+    /*************************************
+     * IMPORTANT!!! Use code "bakery" 
+     * in the verification field to 
+     * create an employee account
+     ************************************/
+    private String employeeCode = "bakery";
+    
     @FXML
     private Button button_signIn, button_signUp;
 
@@ -45,8 +52,6 @@ public class SignupController {
     void handleButton_signIn(ActionEvent event) throws IOException {
         App.setRoot("logInPage.fxml");
     }
-
-    private String employeeCode = "bakery";
 
     @FXML
     void handleButton_signUp(ActionEvent event) throws IOException {
