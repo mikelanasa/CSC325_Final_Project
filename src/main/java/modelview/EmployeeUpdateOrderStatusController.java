@@ -4,8 +4,12 @@
  */
 package modelview;
 
+import com.mycompany.mvvmexample.App;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
 /**
@@ -13,14 +17,23 @@ import javafx.fxml.Initializable;
  *
  * @author erickcruz
  */
-public class EmployeeUpdateOrderStatusController implements Initializable {
+public class EmployeeUpdateOrderStatusController {
 
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+     @FXML
+    private void switchToPrimary() throws IOException {
+        App.setRoot("logInPage.fxml");
+    }
+    
+    @FXML
+    private void switchToHome() throws IOException {
+        App.setRoot("EmployeeMenu.fxml");
+    }
+    
+    
+    @FXML
+    private void shutDownApp() {
+        Platform.exit();
+    }
+    
     
 }
