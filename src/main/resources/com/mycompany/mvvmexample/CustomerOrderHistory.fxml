@@ -8,12 +8,12 @@
 
 <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="modelview.CustomerOrderHistoryController">
   <tabs>
-      <Tab text="View Orders">
+      <Tab text="Order History">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
                   <ListView fx:id="viewOrderListView" layoutY="55.0" prefHeight="618.0" prefWidth="800.0" />
-                  <Button fx:id="generateOrders" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: #C02E28;" text="Generate Order List" textFill="WHITE" />
+                  <Button fx:id="generateOrders" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#showOrders" style="-fx-background-color: #C02E28;" text="View Order History" textFill="WHITE" />
                </children>
             </AnchorPane>
          </content>
