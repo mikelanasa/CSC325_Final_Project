@@ -55,7 +55,7 @@ public class CustomerOrderHistoryController {
     @FXML
     private ListView viewOrderListView;
     
-    List<String> emails = new ArrayList<String>();
+    List<String> items = new ArrayList<String>();
     
     //static UserRecord currentUser;
     
@@ -79,9 +79,9 @@ public class CustomerOrderHistoryController {
             try {
                 List<QueryDocumentSnapshot> documents = future.get().getDocuments();
                 for (QueryDocumentSnapshot document : documents) {
-                    String email =  "email: " + document.get("email").toString() + ", item: " + document.get("item0").toString();
+                    String item =  "item: " + document.get("item0").toString();
                     
-                    emails.add(email);
+                    items.add(item);
                 }
             } catch (InterruptedException | ExecutionException ex) {
                 Logger.getLogger(CustomerBakeryMenuController.class.getName()).log(Level.SEVERE, null, ex);
@@ -97,7 +97,7 @@ public class CustomerOrderHistoryController {
             Thread.currentThread().interrupt();
         }
 
-        return emails;
+        return items;
     }
     
 }

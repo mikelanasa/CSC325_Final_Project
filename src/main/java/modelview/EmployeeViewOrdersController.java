@@ -59,7 +59,7 @@ public class EmployeeViewOrdersController {
     
     List<CustomerOrder> allOrders = new ArrayList<CustomerOrder>();
     
-    List<String> emails = new ArrayList<String>();
+    List<String> orders = new ArrayList<String>();
     
     @FXML
     private void switchToPrimary() throws IOException {
@@ -113,10 +113,10 @@ public class EmployeeViewOrdersController {
             try {
                 List<QueryDocumentSnapshot> documents = future.get().getDocuments();
                 for (QueryDocumentSnapshot document : documents) {
-                    String email =  "email: " + document.get("email").toString() + ", item: " + document.get("item0").toString();
+                    String order =  "email: " + document.get("email").toString() + ", item: " + document.get("item0").toString();
                     
                     
-                    emails.add(email);
+                    orders.add(order);
                 }
             } catch (InterruptedException | ExecutionException ex) {
                 Logger.getLogger(CustomerBakeryMenuController.class.getName()).log(Level.SEVERE, null, ex);
@@ -132,6 +132,6 @@ public class EmployeeViewOrdersController {
             Thread.currentThread().interrupt();
         }
 
-        return emails;
+        return orders;
     }
 }
