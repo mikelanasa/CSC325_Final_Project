@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="modelview.EmployeeUpdateOrderStatusController">
   <tabs>
-    <Tab text="Update Order">
+    <Tab text="Update Order Status">
       <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TextField fx:id="orderIdTextField" layoutX="121.0" layoutY="22.0" />
+                  <Label layoutX="37.0" layoutY="26.0" text="Order Id" />
+                  <TextField fx:id="statusUpdateTextField" layoutX="121.0" layoutY="67.0" />
+                  <Label layoutX="20.0" layoutY="71.0" text="Status Update" />
+                  <Button layoutX="153.0" layoutY="118.0" mnemonicParsing="false" onAction="#updateOrderStatus" style="-fx-background-color: #C02E28;" text="Update Status" textFill="WHITE" />
+               </children></AnchorPane>
       </content>
     </Tab>
     <Tab text="Option">
@@ -24,3 +33,4 @@
     </Tab>
   </tabs>
 </TabPane>
+
