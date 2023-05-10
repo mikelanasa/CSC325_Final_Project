@@ -17,6 +17,7 @@ import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ForkJoinPool;
@@ -97,11 +98,8 @@ public class EmployeeViewOrdersController {
         
         List<String> showEmails = getOrders();
         for(int i = 0; i < showEmails.size(); i++) {
-        
             viewOrderListView.getItems().add(showEmails.get(i));
-        }
-        //viewOrderListView.getItems().add("Item 2");
-        //viewOrderListView.getItems().add("Item 3");     
+        }     
         
     }
     
@@ -115,7 +113,8 @@ public class EmployeeViewOrdersController {
             try {
                 List<QueryDocumentSnapshot> documents = future.get().getDocuments();
                 for (QueryDocumentSnapshot document : documents) {
-                    String email = document.get("email").toString();
+                    String email =  "email: " + document.get("email").toString() + ", item: " + document.get("item0").toString();
+                    
                     
                     emails.add(email);
                 }

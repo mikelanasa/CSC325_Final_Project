@@ -59,6 +59,11 @@ public class CustomerMenuController {
     private void switchToCancelOrder() throws IOException{
         App.setRoot("CustomerCancelOrder.fxml");
     }
+    
+    @FXML
+    private void switchToViewOrderHistory() throws IOException{
+        App.setRoot("CustomerOrderHistory.fxml");
+    }
         
 
     @FXML
